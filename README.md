@@ -88,36 +88,14 @@ El sitio funciona **sin necesidad de registro**, pero incluye un sistema de aute
 
 ```
 ├── backend/                 # API REST con Node.js + Express
-│   ├── src/
-│   │   ├── config/         # Configuraciones
-│   │   ├── controllers/    # Controladores
-│   │   ├── middleware/     # Middlewares
-│   │   ├── models/         # Modelos Mongoose
-│   │   ├── routes/         # Rutas API
-│   │   ├── services/       # Servicios (email)
-│   │   └── server.js       # Entry point
-│   ├── Dockerfile
-│   └── package.json
-│
 ├── frontend/               # Next.js 14 App Router
-│   ├── src/
-│   │   ├── app/           # Páginas
-│   │   │   ├── admin/     # Panel de administración
-│   │   │   ├── login/     # Página de login
-│   │   │   ├── registro/  # Página de registro
-│   │   │   └── ...
-│   │   ├── components/    # Componentes
-│   │   ├── context/       # Contextos (AuthContext)
-│   │   ├── hooks/         # Custom hooks
-│   │   ├── lib/           # Utilidades
-│   │   └── styles/        # SCSS
-│   ├── public/            # Archivos estáticos
-│   ├── Dockerfile
-│   └── package.json
-│
-├── docker-compose.yml     # Orquestación de servicios
-├── mongo-init.js          # Inicialización de MongoDB
-└── .env                   # Variables de entorno
+├── Cruce_ARBA-AGIP/        # Herramienta de cruces (submodule)
+├── docker-compose.yml      # Orquestación de servicios (desarrollo)
+├── docker-compose.prod.yml # Orquestación con nginx (producción)
+├── deploy.sh               # Script de deploy automático
+├── nginx.conf              # Configuración de nginx
+├── mongo-init.js           # Inicialización de MongoDB
+└── .env                    # Variables de entorno
 ```
 
 ## Servicios Docker
@@ -233,14 +211,88 @@ npm run dev
 
 ## Producción
 
-Para deploy en producción:
+### Opción 1: VPS (Recomendado)
 
-1. Cambiar `JWT_SECRET` por una clave segura
-2. Actualizar `NEXT_PUBLIC_API_URL` con el dominio del backend
-3. Configurar HTTPS con reverse proxy (nginx/traefik)
-4. Cambiar credenciales de MongoDB
-5. Eliminar `mongo-express` del docker-compose
-6. Cambiar contraseña del usuario admin
+Esta es la opción más flexible para implementar con Docker.
+
+#### Proveedores recomendados en Argentina:
+- **LightNode**: Desde $7.71/mes - Datacenter Buenos Aires
+- **DigitalOcean**: Desde $4/mes - Muy popular
+- **Contabo**: Desde €5/mes
+
+#### Pasos de deploy:
+
+```bash
+# 1. Conectar al VPS por SSH
+ssh usuario@tu-servidor
+
+# 2. Instalar Docker
+curl -fsSL https://get.docker.com | sh
+sudo usermod -aG docker $USER
+
+# 3. Clonar el repositorio (incluye submodules)
+git clone --recurse-submodules https://github.com/asubelza/Web_ECJY.git
+cd Web_ECJY
+
+# 4. Configurar variables de entorno
+cp .env.production .env
+nano .env  # Editar con tus valores reales
+
+# 5. Ejecutar deploy
+chmod +x deploy.sh
+./deploy.sh
+```
+
+#### Configuración adicional para producción:
+
+1. **Configurar dominio** en `nginx.conf`:
+   ```nginx
+   server_name tudominio.com www.tudominio.com;
+   ```
+
+2. **SSL/HTTPS** (recomendado):
+   ```bash
+   # Instalar Certbot
+   sudo apt install certbot python3-certbot-nginx
+   
+   # Obtener certificado
+   sudo certbot --nginx -d tudominio.com -d www.tudominio.com
+   ```
+
+3. **Firewall** (opcional):
+   ```bash
+   sudo ufw allow 80/tcp
+   sudo ufw allow 443/tcp
+   sudo ufw enable
+   ```
+
+#### Archivos de producción:
+| Archivo | Descripción |
+|---------|-------------|
+| `deploy.sh` | Script automático de deploy |
+| `docker-compose.prod.yml` | Configuración con nginx |
+| `nginx.conf` | Reverse proxy |
+| `.env.production` | Template de variables |
+
+### Opción 2: Servicios en la nube (Gratuitos)
+
+Para proyectos personales o pequeños:
+
+| Servicio | Plan gratis | Ideal para |
+|----------|-------------|------------|
+| Vercel | ✅ | Frontend Next.js |
+| Railway | ✅ $5/mes | Backend Node.js |
+| Render | ✅ | Backend Node.js |
+| MongoDB Atlas | ✅ | Base de datos |
+| Fly.io | ✅ | Docker |
+
+### Configuración de producción
+
+1. Cambiar `JWT_SECRET` por una clave segura (generar con: `openssl rand -base64 32`)
+2. Actualizar `FRONTEND_URL` con tu dominio
+3. Cambiar credenciales de MongoDB
+4. Cambiar contraseña del usuario admin
+5. Configurar SSL con Let's Encrypt
 
 ## Próximos Pasos
 
