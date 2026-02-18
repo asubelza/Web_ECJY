@@ -84,7 +84,7 @@ services:
   # Cruce ARBA-AGIP - Herramienta de cruces fiscales
   cruce_backend:
     build:
-      context: ../Cruce_ARBA-AGIP/backend
+      context: ./Cruce_ARBA-AGIP/backend
       dockerfile: Dockerfile
     container_name: cruce_arba_agip_backend
     restart: unless-stopped
@@ -100,7 +100,7 @@ services:
 
   cruce_frontend:
     build:
-      context: ../Cruce_ARBA-AGIP/frontend
+      context: ./Cruce_ARBA-AGIP/frontend
       dockerfile: Dockerfile
     container_name: cruce_arba_agip_frontend
     restart: unless-stopped
