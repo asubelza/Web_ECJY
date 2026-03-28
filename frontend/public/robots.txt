@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://estudiocontablejy.com.ar/sitemap.xml
