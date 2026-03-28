@@ -178,14 +178,17 @@ export default function AdminContactosPage() {
           align-items: center;
           gap: 0.5rem;
           color: #1e3a5f;
-          padding: 0.5rem 1rem;
+          background: #ffffff;
+          padding: 0.6rem 1.2rem;
           border-radius: 8px;
+          border: 1px solid #1e3a5f;
           transition: all 0.2s ease;
           text-decoration: none;
+          font-weight: 500;
         }
         .back-btn:hover {
-          background: #f8f9fa;
-          color: #1e3a5f;
+          background: #1e3a5f;
+          color: #ffffff;
           transform: translateX(-4px);
         }
       `}</style>

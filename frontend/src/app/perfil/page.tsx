@@ -69,12 +69,32 @@ export default function PerfilPage() {
           </div>
 
           <div className="text-center mt-4">
-            <a href="/" style={{ color: '#1e3a5f' }}>
+            <a href="/" className="back-btn">
               ← Volver al inicio
             </a>
           </div>
         </Card.Body>
       </Card>
     </Container>
+    <style jsx>{`
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #1e3a5f;
+        background: #ffffff;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        border: 1px solid #1e3a5f;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .back-btn:hover {
+        background: #1e3a5f;
+        color: #ffffff;
+        transform: translateX(-4px);
+      }
+    `}</style>
   )
 }
