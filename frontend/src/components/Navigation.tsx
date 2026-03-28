@@ -32,7 +32,12 @@ export default function Navigation() {
     >
       <Container>
         <Navbar.Brand as={Link} href="/">
-          <span className="logo-text">Estudio JY</span>
+          <img 
+            src="/images/logos/Logo_Mediano.png" 
+            alt="Estudio JY" 
+            height="40"
+            style={{ marginRight: '10px' }}
+          />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">

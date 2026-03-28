@@ -17,7 +17,11 @@ export default function Footer() {
       <Container>
         <div className="footer-content">
           <div>
-            <h3>Estudio JY</h3>
+            <img 
+              src="/images/logos/Logo_Mediano.png" 
+              alt="Estudio JY" 
+              style={{ height: '50px', marginBottom: '1rem' }}
+            />
             <p style={{ opacity: 0.8, fontSize: '0.9rem', marginBottom: '1rem' }}>
               Servicios contables, financieros y tecnológicos para hacer crecer tu PyME.
             </p>
