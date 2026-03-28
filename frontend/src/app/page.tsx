@@ -6,6 +6,8 @@ import SpecialistsTable from '@/components/SpecialistsTable'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 
+import { Container } from 'react-bootstrap'
+
 export default function HomePage() {
   useAOS()
 
