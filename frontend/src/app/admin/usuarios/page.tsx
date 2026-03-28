@@ -168,11 +168,8 @@ export default function AdminUsuariosPage() {
   return (
     <Container style={{ paddingTop: '120px', paddingBottom: '50px' }}>
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1>Gestión de Usuarios</h1>
-        <a 
-          href="/admin" 
-          style={{ color: '#fff', opacity: 0.7 }}
-        >
+        <h1 style={{ color: '#1e3a5f' }}>Gestión de Usuarios</h1>
+        <a href="/admin" style={{ color: '#1e3a5f' }}>
           ← Volver al panel
         </a>
       </div>
@@ -184,100 +181,93 @@ export default function AdminUsuariosPage() {
             placeholder="Buscar usuarios por nombre o email..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="bg-dark text-white border-secondary"
           />
-          <Button variant="secondary" onClick={fetchUsers}>
+          <Button variant="outline-secondary" onClick={fetchUsers}>
             🔍 Buscar
           </Button>
         </InputGroup>
       </div>
 
-      <div className="section2">
-        <div className="table-responsive">
-          <Table striped hover className="table">
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Rol</th>
-                <th>Registro</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user._id}>
-                  <td>
-                    <div className="d-flex align-items-center gap-2">
-                      <span>👤</span>
-                      <span>{user.name}</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="d-flex flex-column">
-                      <span>{user.email}</span>
-                      {getProviderBadge(user.provider)}
-                    </div>
-                  </td>
-                  <td>
-                    <span style={{ 
-                      color: user.role === 'admin' ? '#e94560' : '#fff',
-                      fontWeight: user.role === 'admin' ? 'bold' : 'normal'
-                    }}>
-                      {user.role === 'admin' ? '👑 Administrador' : 'Usuario'}
-                    </span>
-                  </td>
-                  <td style={{ whiteSpace: 'nowrap' }}>
-                    {formatDate(user.createdAt)}
-                  </td>
-                  <td>
+      <div style={{ background: '#fff', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', overflow: 'hidden' }}>
+        <Table hover className="mb-0">
+          <thead style={{ background: '#f8f9fa' }}>
+            <tr>
+              <th style={{ color: '#1e3a5f' }}>Nombre</th>
+              <th style={{ color: '#1e3a5f' }}>Email</th>
+              <th style={{ color: '#1e3a5f' }}>Rol</th>
+              <th style={{ color: '#1e3a5f' }}>Registro</th>
+              <th style={{ color: '#1e3a5f' }}>Estado</th>
+              <th style={{ color: '#1e3a5f' }}>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user._id}>
+                <td>
+                  <div className="d-flex align-items-center gap-2">
+                    <span>👤</span>
+                    <span>{user.name}</span>
+                  </div>
+                </td>
+                <td>
+                  <div className="d-flex flex-column">
+                    <span>{user.email}</span>
+                    {getProviderBadge(user.provider)}
+                  </div>
+                </td>
+                <td>
+                  <span style={{ 
+                    color: user.role === 'admin' ? '#1e3a5f' : '#6c757d',
+                    fontWeight: user.role === 'admin' ? 'bold' : 'normal'
+                  }}>
+                    {user.role === 'admin' ? '👑 Administrador' : 'Usuario'}
+                  </span>
+                </td>
+                <td style={{ whiteSpace: 'nowrap', color: '#6c757d' }}>
+                  {formatDate(user.createdAt)}
+                </td>
+                <td>
+                  <Button
+                    size="sm"
+                    variant={user.active ? 'outline-success' : 'outline-warning'}
+                    onClick={() => toggleUserStatus(user)}
+                  >
+                    {user.active ? '✓ Activo' : '✗ Inactivo'}
+                  </Button>
+                </td>
+                <td>
+                  <div className="d-flex gap-2">
                     <Button
                       size="sm"
-                      variant={user.active ? 'success' : 'warning'}
-                      onClick={() => toggleUserStatus(user)}
+                      variant="outline-primary"
+                      onClick={() => handleEdit(user)}
                     >
-                      {user.active ? '✓ Activo' : '✗ Inactivo'}
+                      Editar
                     </Button>
-                  </td>
-                  <td>
-                    <div className="d-flex gap-2">
-                      <Button
-                        size="sm"
-                        variant="warning"
-                        onClick={() => handleEdit(user)}
-                      >
-                        ✏️ Editar
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="danger"
-                        onClick={() => handleDelete(user._id)}
-                        disabled={user.role === 'admin'}
-                      >
-                        🗑️
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </div>
+                    <Button
+                      size="sm"
+                      variant="outline-danger"
+                      onClick={() => handleDelete(user._id)}
+                      disabled={user.role === 'admin'}
+                    >
+                      Eliminar
+                    </Button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
         
         {users.length === 0 && (
-          <p className="text-center" style={{ opacity: 0.7, padding: '2rem' }}>
+          <p className="text-center p-4" style={{ color: '#6c757d' }}>
             No se encontraron usuarios.
           </p>
         )}
       </div>
 
-      <Modal 
-        show={showModal} 
-        onHide={() => setShowModal(false)}
-        contentClassName="bg-dark text-white"
-      >
-        <Modal.Header closeButton closeVariant="white">
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
           <Modal.Title>Editar Usuario</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -289,7 +279,6 @@ export default function AdminUsuariosPage() {
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
-                className="bg-secondary text-white border-dark"
               />
             </Form.Group>
 
@@ -299,7 +288,6 @@ export default function AdminUsuariosPage() {
                 type="email"
                 value={formData.email}
                 disabled
-                className="bg-secondary text-white border-dark"
               />
             </Form.Group>
 
@@ -308,7 +296,6 @@ export default function AdminUsuariosPage() {
               <Form.Select
                 value={formData.role}
                 onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="bg-secondary text-white border-dark"
               >
                 <option value="user">Usuario</option>
                 <option value="admin">Administrador</option>

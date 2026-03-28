@@ -38,8 +38,8 @@ const categories = [
 const defaultIcons = ['📊', '💰', '👥', '📄', '📈', '🔧', '⚙️', '📋', '📑', '💼', '🏦', '🧾']
 
 const defaultColors = [
-  '#0f3460', '#16213e', '#1a1a2e', '#e94560',
-  '#4a90e2', '#50c878', '#f39c12', '#9b59b6'
+  '#1e3a5f', '#2d5a87', '#4a90e2', '#50c878',
+  '#f39c12', '#9b59b6', '#e94560', '#6c757d'
 ]
 
 export default function AdminHerramientasPage() {
@@ -55,7 +55,7 @@ export default function AdminHerramientasPage() {
     category: 'otro',
     url: '',
     icon: '🔧',
-    color: '#0f3460',
+    color: '#1e3a5f',
     isExternal: false,
     order: 0,
     active: true
@@ -140,7 +140,7 @@ export default function AdminHerramientasPage() {
       category: 'otro',
       url: '',
       icon: '🔧',
-      color: '#0f3460',
+      color: '#1e3a5f',
       isExternal: false,
       order: 0,
       active: true
@@ -172,31 +172,28 @@ export default function AdminHerramientasPage() {
   return (
     <Container style={{ paddingTop: '120px', paddingBottom: '50px' }}>
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1>Herramientas Digitales</h1>
+        <h1 style={{ color: '#1e3a5f' }}>Herramientas Digitales</h1>
         <div className="d-flex gap-3 align-items-center">
-          <a 
-            href="/admin" 
-            style={{ color: '#fff', opacity: 0.7 }}
-          >
+          <a href="/admin" style={{ color: '#1e3a5f' }}>
             ← Volver al panel
           </a>
-          <Button variant="secondary" onClick={openCreateModal}>
+          <Button variant="primary" onClick={openCreateModal}>
             + Nueva Herramienta
           </Button>
         </div>
       </div>
 
-      <div className="section2">
-        <Table striped hover className="table">
-          <thead>
+      <div style={{ background: '#fff', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', overflow: 'hidden' }}>
+        <Table hover className="mb-0">
+          <thead style={{ background: '#f8f9fa' }}>
             <tr>
-              <th>Orden</th>
-              <th>Icono</th>
-              <th>Nombre</th>
-              <th>Categoría</th>
-              <th>URL</th>
-              <th>Estado</th>
-              <th>Acciones</th>
+              <th style={{ color: '#1e3a5f' }}>Orden</th>
+              <th style={{ color: '#1e3a5f' }}>Icono</th>
+              <th style={{ color: '#1e3a5f' }}>Nombre</th>
+              <th style={{ color: '#1e3a5f' }}>Categoría</th>
+              <th style={{ color: '#1e3a5f' }}>URL</th>
+              <th style={{ color: '#1e3a5f' }}>Estado</th>
+              <th style={{ color: '#1e3a5f' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -217,22 +214,22 @@ export default function AdminHerramientasPage() {
                     <strong>{tool.name}</strong>
                   </div>
                   {tool.description && (
-                    <small style={{ opacity: 0.7 }}>{tool.description}</small>
+                    <small style={{ color: '#6c757d' }}>{tool.description}</small>
                   )}
                 </td>
                 <td>{getCategoryLabel(tool.category)}</td>
                 <td>
                   {tool.url ? (
-                    <span style={{ color: tool.isExternal ? '#e94560' : '#4a90e2' }}>
+                    <span style={{ color: tool.isExternal ? '#1e3a5f' : '#2d5a87' }}>
                       {tool.isExternal ? '🔗 Externo' : '📄 Interno'}
                     </span>
                   ) : (
-                    <span style={{ opacity: 0.5 }}>Sin URL</span>
+                    <span style={{ color: '#6c757d' }}>Sin URL</span>
                   )}
                 </td>
                 <td>
                   <span style={{ 
-                    color: tool.active ? '#50c878' : '#f87171',
+                    color: tool.active ? '#22c55e' : '#ef4444',
                     fontWeight: 'bold'
                   }}>
                     {tool.active ? '✓ Activo' : '✗ Inactivo'}
@@ -242,17 +239,17 @@ export default function AdminHerramientasPage() {
                   <div className="d-flex gap-2">
                     <Button
                       size="sm"
-                      variant="warning"
+                      variant="outline-primary"
                       onClick={() => handleEdit(tool)}
                     >
-                      ✏️
+                      Editar
                     </Button>
                     <Button
                       size="sm"
-                      variant="danger"
+                      variant="outline-danger"
                       onClick={() => handleDelete(tool._id)}
                     >
-                      🗑️
+                      Eliminar
                     </Button>
                   </div>
                 </td>
@@ -262,19 +259,14 @@ export default function AdminHerramientasPage() {
         </Table>
         
         {tools.length === 0 && (
-          <p className="text-center" style={{ opacity: 0.7, padding: '2rem' }}>
+          <p className="text-center p-4" style={{ color: '#6c757d' }}>
             No hay herramientas configuradas. Crea la primera!
           </p>
         )}
       </div>
 
-      <Modal 
-        show={showModal} 
-        onHide={() => setShowModal(false)}
-        contentClassName="bg-dark text-white"
-        size="lg"
-      >
-        <Modal.Header closeButton closeVariant="white">
+      <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
+        <Modal.Header closeButton>
           <Modal.Title>
             {editingTool ? 'Editar Herramienta' : 'Nueva Herramienta'}
           </Modal.Title>
@@ -291,7 +283,6 @@ export default function AdminHerramientasPage() {
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Nombre de la herramienta"
                     required
-                    className="bg-secondary text-white border-dark"
                   />
                 </Form.Group>
               </Col>
@@ -301,7 +292,6 @@ export default function AdminHerramientasPage() {
                   <Form.Select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="bg-secondary text-white border-dark"
                   >
                     {categories.map(cat => (
                       <option key={cat.key} value={cat.key}>
@@ -321,7 +311,6 @@ export default function AdminHerramientasPage() {
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 placeholder="Breve descripción de la herramienta"
-                className="bg-secondary text-white border-dark"
               />
             </Form.Group>
 
@@ -332,7 +321,6 @@ export default function AdminHerramientasPage() {
                 value={formData.url}
                 onChange={(e) => setFormData({ ...formData, url: e.target.value })}
                 placeholder="https://herramienta.com o /ruta-interna"
-                className="bg-secondary text-white border-dark"
               />
             </Form.Group>
 
@@ -344,7 +332,7 @@ export default function AdminHerramientasPage() {
                     {defaultIcons.map(icon => (
                       <Button
                         key={icon}
-                        variant={formData.icon === icon ? 'primary' : 'secondary'}
+                        variant={formData.icon === icon ? 'primary' : 'outline-secondary'}
                         size="sm"
                         onClick={() => setFormData({ ...formData, icon })}
                         style={{ fontSize: '1.2rem' }}
@@ -362,12 +350,12 @@ export default function AdminHerramientasPage() {
                     {defaultColors.map(color => (
                       <Button
                         key={color}
-                        variant={formData.color === color ? 'light' : 'secondary'}
+                        variant="light"
                         size="sm"
                         onClick={() => setFormData({ ...formData, color })}
                         style={{ 
                           background: color, 
-                          border: formData.color === color ? '3px solid white' : 'none',
+                          border: formData.color === color ? '3px solid #1e3a5f' : '1px solid #ddd',
                           width: '30px',
                           height: '30px',
                           padding: 0
@@ -384,7 +372,6 @@ export default function AdminHerramientasPage() {
                     type="number"
                     value={formData.order}
                     onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
-                    className="bg-secondary text-white border-dark"
                   />
                 </Form.Group>
               </Col>

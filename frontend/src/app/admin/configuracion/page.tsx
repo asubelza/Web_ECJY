@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
 import Container from 'react-bootstrap/Container'
+import Card from 'react-bootstrap/Card'
 
 export default function ConfiguracionPage() {
   const { isAuthenticated, isAdmin, loading } = useAuth()
@@ -32,27 +33,26 @@ export default function ConfiguracionPage() {
   return (
     <Container style={{ paddingTop: '120px', paddingBottom: '50px' }}>
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1>Configuración</h1>
-        <a 
-          href="/admin" 
-          style={{ color: '#fff', opacity: 0.7 }}
-        >
+        <h1 style={{ color: '#1e3a5f' }}>Configuración</h1>
+        <a href="/admin" style={{ color: '#1e3a5f' }}>
           ← Volver al panel
         </a>
       </div>
 
-      <div className="aside1 text-center">
-        <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>⚙️ Próximamente</h2>
-        <p style={{ opacity: 0.8 }}>
-          Esta sección permitirá configurar:
-        </p>
-        <ul style={{ textAlign: 'left', display: 'inline-block', marginTop: '1rem' }}>
-          <li>Información de contacto</li>
-          <li>Redes sociales</li>
-          <li>Texto de bienvenida</li>
-          <li>Preferencias de notificación</li>
-        </ul>
-      </div>
+      <Card className="text-center p-5" style={{ border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+        <Card.Body>
+          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#1e3a5f' }}>⚙️ Próximamente</h2>
+          <p style={{ color: '#6c757d', marginBottom: '1rem' }}>
+            Esta sección permitirá configurar:
+          </p>
+          <ul style={{ textAlign: 'left', display: 'inline-block', color: '#6c757d' }} className="mt-3">
+            <li>Información de contacto</li>
+            <li>Redes sociales</li>
+            <li>Texto de bienvenida</li>
+            <li>Preferencias de notificación</li>
+          </ul>
+        </Card.Body>
+      </Card>
     </Container>
   )
 }

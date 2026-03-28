@@ -64,7 +64,7 @@ export default function AdminContactosPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'pending':
-        return <Badge bg="warning">Pendiente</Badge>
+        return <Badge bg="warning" style={{ color: '#000' }}>Pendiente</Badge>
       case 'read':
         return <Badge bg="info">Leído</Badge>
       case 'replied':
@@ -99,83 +99,76 @@ export default function AdminContactosPage() {
   return (
     <Container style={{ paddingTop: '120px', paddingBottom: '50px' }}>
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1>Mensajes de Contacto</h1>
-        <a 
-          href="/admin" 
-          style={{ color: '#fff', opacity: 0.7 }}
-        >
+        <h1 style={{ color: '#1e3a5f' }}>Mensajes de Contacto</h1>
+        <a href="/admin" style={{ color: '#1e3a5f' }}>
           ← Volver al panel
         </a>
       </div>
 
       {contacts.length === 0 ? (
-        <div className="aside1 text-center">
-          <p>No hay mensajes de contacto todavía.</p>
+        <div className="text-center p-5" style={{ background: '#f8f9fa', borderRadius: '8px' }}>
+          <p style={{ color: '#6c757d' }}>No hay mensajes de contacto todavía.</p>
         </div>
       ) : (
-        <div className="section2">
-          <div className="table-responsive">
-            <Table striped hover className="table">
-              <thead>
-                <tr>
-                  <th>Fecha</th>
-                  <th>Nombre</th>
-                  <th>Email</th>
-                  <th>Mensaje</th>
-                  <th>Estado</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {contacts.map((contact) => (
-                  <tr key={contact._id}>
-                    <td style={{ fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
-                      {formatDate(contact.createdAt)}
-                    </td>
-                    <td>{contact.name}</td>
-                    <td>
-                      <a 
-                        href={`mailto:${contact.email}`}
-                        style={{ color: '#e94560' }}
+        <div style={{ background: '#fff', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', overflow: 'hidden' }}>
+          <Table hover className="mb-0">
+            <thead style={{ background: '#f8f9fa' }}>
+              <tr>
+                <th style={{ color: '#1e3a5f' }}>Fecha</th>
+                <th style={{ color: '#1e3a5f' }}>Nombre</th>
+                <th style={{ color: '#1e3a5f' }}>Email</th>
+                <th style={{ color: '#1e3a5f' }}>Mensaje</th>
+                <th style={{ color: '#1e3a5f' }}>Estado</th>
+                <th style={{ color: '#1e3a5f' }}>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {contacts.map((contact) => (
+                <tr key={contact._id}>
+                  <td style={{ fontSize: '0.85rem', whiteSpace: 'nowrap', color: '#6c757d' }}>
+                    {formatDate(contact.createdAt)}
+                  </td>
+                  <td>{contact.name}</td>
+                  <td>
+                    <a href={`mailto:${contact.email}`} style={{ color: '#1e3a5f' }}>
+                      {contact.email}
+                    </a>
+                  </td>
+                  <td style={{ maxWidth: '200px' }}>
+                    <div style={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      color: '#6c757d'
+                    }}>
+                      {contact.message}
+                    </div>
+                  </td>
+                  <td>{getStatusBadge(contact.status)}</td>
+                  <td>
+                    <div className="d-flex gap-1 flex-wrap">
+                      <Button
+                        size="sm"
+                        variant="outline-secondary"
+                        onClick={() => updateStatus(contact._id, 'read')}
+                        disabled={contact.status === 'read'}
                       >
-                        {contact.email}
-                      </a>
-                    </td>
-                    <td style={{ maxWidth: '200px' }}>
-                      <div style={{
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap'
-                      }}>
-                        {contact.message}
-                      </div>
-                    </td>
-                    <td>{getStatusBadge(contact.status)}</td>
-                    <td>
-                      <div className="d-flex gap-1 flex-wrap">
-                        <Button
-                          size="sm"
-                          variant="info"
-                          onClick={() => updateStatus(contact._id, 'read')}
-                          disabled={contact.status === 'read'}
-                        >
-                          Leído
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="success"
-                          onClick={() => updateStatus(contact._id, 'replied')}
-                          disabled={contact.status === 'replied'}
-                        >
-                          Respondido
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
+                        Leído
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline-success"
+                        onClick={() => updateStatus(contact._id, 'replied')}
+                        disabled={contact.status === 'replied'}
+                      >
+                        Respondido
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
         </div>
       )}
     </Container>

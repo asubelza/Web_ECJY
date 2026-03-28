@@ -134,77 +134,74 @@ export default function AdminEspecialistasPage() {
   return (
     <Container style={{ paddingTop: '120px', paddingBottom: '50px' }}>
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1>Especialistas</h1>
+        <h1 style={{ color: '#1e3a5f' }}>Especialistas</h1>
         <div className="d-flex gap-3 align-items-center">
-          <a 
-            href="/admin" 
-            style={{ color: '#fff', opacity: 0.7 }}
-          >
+          <a href="/admin" style={{ color: '#1e3a5f' }}>
             ← Volver al panel
           </a>
-          <Button variant="secondary" onClick={openCreateModal}>
+          <Button variant="primary" onClick={openCreateModal}>
             + Nuevo Especialista
           </Button>
         </div>
       </div>
 
-      <div className="section2">
-        <div className="table-responsive">
-          <Table striped hover className="table">
-            <thead>
-              <tr>
-                <th>Orden</th>
-                <th>Area</th>
-                <th>Nombre</th>
-                <th>Estado</th>
-                <th>Acciones</th>
+      <div style={{ background: '#fff', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', overflow: 'hidden' }}>
+        <Table hover className="mb-0">
+          <thead style={{ background: '#f8f9fa' }}>
+            <tr>
+              <th style={{ color: '#1e3a5f' }}>Orden</th>
+              <th style={{ color: '#1e3a5f' }}>Área</th>
+              <th style={{ color: '#1e3a5f' }}>Nombre</th>
+              <th style={{ color: '#1e3a5f' }}>Estado</th>
+              <th style={{ color: '#1e3a5f' }}>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {specialists.map((specialist) => (
+              <tr key={specialist._id}>
+                <td>{specialist.order}</td>
+                <td>{specialist.area}</td>
+                <td>{specialist.name}</td>
+                <td>
+                  <span style={{ 
+                    color: specialist.active ? '#22c55e' : '#ef4444',
+                    fontWeight: 'bold'
+                  }}>
+                    {specialist.active ? '✓ Activo' : '✗ Inactivo'}
+                  </span>
+                </td>
+                <td>
+                  <div className="d-flex gap-2">
+                    <Button
+                      size="sm"
+                      variant="outline-primary"
+                      onClick={() => handleEdit(specialist)}
+                    >
+                      Editar
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline-danger"
+                      onClick={() => handleDelete(specialist._id)}
+                    >
+                      Eliminar
+                    </Button>
+                  </div>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {specialists.map((specialist) => (
-                <tr key={specialist._id}>
-                  <td>{specialist.order}</td>
-                  <td>{specialist.area}</td>
-                  <td>{specialist.name}</td>
-                  <td>
-                    <span style={{ 
-                      color: specialist.active ? '#4ade80' : '#f87171',
-                      fontWeight: 'bold'
-                    }}>
-                      {specialist.active ? 'Activo' : 'Inactivo'}
-                    </span>
-                  </td>
-                  <td>
-                    <div className="d-flex gap-2">
-                      <Button
-                        size="sm"
-                        variant="warning"
-                        onClick={() => handleEdit(specialist)}
-                      >
-                        Editar
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="danger"
-                        onClick={() => handleDelete(specialist._id)}
-                      >
-                        Eliminar
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </div>
+            ))}
+          </tbody>
+        </Table>
+        
+        {specialists.length === 0 && (
+          <p className="text-center p-4" style={{ color: '#6c757d' }}>
+            No hay especialistas configurados. Crea el primero!
+          </p>
+        )}
       </div>
 
-      <Modal 
-        show={showModal} 
-        onHide={() => setShowModal(false)}
-        contentClassName="bg-dark text-white"
-      >
-        <Modal.Header closeButton closeVariant="white">
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
           <Modal.Title>
             {editingSpecialist ? 'Editar Especialista' : 'Nuevo Especialista'}
           </Modal.Title>
@@ -212,13 +209,12 @@ export default function AdminEspecialistasPage() {
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
-              <Form.Label>Area</Form.Label>
+              <Form.Label>Área</Form.Label>
               <Form.Control
                 type="text"
                 value={formData.area}
                 onChange={(e) => setFormData({ ...formData, area: e.target.value })}
                 required
-                className="bg-secondary text-white border-dark"
               />
             </Form.Group>
 
@@ -229,18 +225,16 @@ export default function AdminEspecialistasPage() {
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
-                className="bg-secondary text-white border-dark"
               />
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>Descripcion (opcional)</Form.Label>
+              <Form.Label>Descripción (opcional)</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={2}
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                className="bg-secondary text-white border-dark"
               />
             </Form.Group>
 
@@ -250,13 +244,12 @@ export default function AdminEspecialistasPage() {
                 type="number"
                 value={formData.order}
                 onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
-                className="bg-secondary text-white border-dark"
               />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Check
-                type="checkbox"
+                type="switch"
                 label="Activo"
                 checked={formData.active}
                 onChange={(e) => setFormData({ ...formData, active: e.target.checked })}

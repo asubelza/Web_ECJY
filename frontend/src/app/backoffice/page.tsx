@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import { useAuth } from '@/context/AuthContext'
 import axios from '@/lib/axios'
 import Container from 'react-bootstrap/Container'
@@ -92,132 +91,132 @@ export default function BackofficePage() {
   }
 
   return (
-    <Container style={{ paddingTop: '120px', paddingBottom: '50px' }}>
-      <h1 className="text-center mb-2">Mi Backoffice</h1>
-      <p className="text-center mb-5" style={{ opacity: 0.7 }}>
-        Accede a tus herramientas y gestiona tu información
-      </p>
+    <>
+      <Container style={{ paddingTop: '120px', paddingBottom: '50px' }}>
+        <h1 className="text-center mb-2" style={{ color: '#1e3a5f' }}>Mi Backoffice</h1>
+        <p className="text-center mb-5" style={{ color: '#6c757d' }}>
+          Accede a tus herramientas y gestiona tu información
+        </p>
 
-      {/* Estadísticas */}
-      {stats && (
-        <Row className="mb-5">
-          <Col md={3}>
-            <Card className="text-center" style={{ background: '#0f3460', border: 'none' }}>
-              <Card.Body>
-                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>👥</div>
-                <h2>{stats.totalUsers}</h2>
-                <p style={{ opacity: 0.7, margin: 0 }}>Usuarios</p>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={3}>
-            <Card className="text-center" style={{ background: '#16213e', border: 'none' }}>
-              <Card.Body>
-                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📧</div>
-                <h2>{stats.totalContacts}</h2>
-                <p style={{ opacity: 0.7, margin: 0 }}>Mensajes</p>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={3}>
-            <Card className="text-center" style={{ background: '#e94560', border: 'none' }}>
-              <Card.Body>
-                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>⏰</div>
-                <h2>{stats.pendingContacts}</h2>
-                <p style={{ opacity: 0.7, margin: 0 }}>Pendientes</p>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={3}>
-            <Card className="text-center" style={{ background: '#1a1a2e', border: 'none' }}>
-              <Card.Body>
-                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>⭐</div>
-                <h2>{stats.totalSpecialists}</h2>
-                <p style={{ opacity: 0.7, margin: 0 }}>Especialistas</p>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      )}
+        {stats && (
+          <Row className="mb-5 g-4">
+            <Col md={3}>
+              <Card className="text-center h-100" style={{ border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+                <Card.Body>
+                  <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>👥</div>
+                  <h2 style={{ color: '#1e3a5f', margin: 0 }}>{stats.totalUsers}</h2>
+                  <p style={{ color: '#6c757d', margin: 0 }}>Usuarios</p>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={3}>
+              <Card className="text-center h-100" style={{ border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+                <Card.Body>
+                  <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📧</div>
+                  <h2 style={{ color: '#1e3a5f', margin: 0 }}>{stats.totalContacts}</h2>
+                  <p style={{ color: '#6c757d', margin: 0 }}>Mensajes</p>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={3}>
+              <Card className="text-center h-100" style={{ border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+                <Card.Body>
+                  <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>⏰</div>
+                  <h2 style={{ color: '#1e3a5f', margin: 0 }}>{stats.pendingContacts}</h2>
+                  <p style={{ color: '#6c757d', margin: 0 }}>Pendientes</p>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={3}>
+              <Card className="text-center h-100" style={{ border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+                <Card.Body>
+                  <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>⭐</div>
+                  <h2 style={{ color: '#1e3a5f', margin: 0 }}>{stats.totalSpecialists}</h2>
+                  <p style={{ color: '#6c757d', margin: 0 }}>Especialistas</p>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        )}
 
-      {/* Herramientas por categoría */}
-      {categories.map((category) => {
-        const categoryTools = getToolsByCategory(category.key)
-        if (categoryTools.length === 0) return null
+        {categories.map((category) => {
+          const categoryTools = getToolsByCategory(category.key)
+          if (categoryTools.length === 0) return null
 
-        return (
-          <div key={category.key} className="mb-5">
-            <h3 className="mb-3" style={{ borderBottom: '2px solid #e94560', paddingBottom: '0.5rem' }}>
-              {category.icon} {category.label}
-            </h3>
-            <Row className="g-4">
-              {categoryTools.map((tool) => (
-                <Col key={tool._id} md={4}>
-                  <Card 
-                    style={{ 
-                      background: tool.color, 
-                      border: 'none', 
-                      cursor: 'pointer',
-                      transition: 'transform 0.2s ease',
-                      height: '100%'
-                    }}
-                    className="tool-card"
-                    onClick={() => {
-                      if (tool.url) {
-                        if (tool.isExternal) {
-                          window.open(tool.url, '_blank')
-                        } else {
-                          router.push(tool.url)
+          return (
+            <div key={category.key} className="mb-5">
+              <h3 className="mb-3" style={{ color: '#1e3a5f', borderBottom: '2px solid #1e3a5f', paddingBottom: '0.5rem' }}>
+                {category.icon} {category.label}
+              </h3>
+              <Row className="g-4">
+                {categoryTools.map((tool) => (
+                  <Col key={tool._id} md={4}>
+                    <Card 
+                      style={{ 
+                        background: '#ffffff',
+                        border: 'none',
+                        cursor: 'pointer',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                        height: '100%',
+                        transition: 'all 0.3s ease'
+                      }}
+                      className="tool-card"
+                      onClick={() => {
+                        if (tool.url) {
+                          if (tool.isExternal) {
+                            window.open(tool.url, '_blank')
+                          } else {
+                            router.push(tool.url)
+                          }
                         }
-                      }
-                    }}
-                  >
-                    <Card.Body className="text-center">
-                      <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>
-                        {tool.icon}
-                      </div>
-                      <Card.Title style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>
-                        {tool.name}
-                      </Card.Title>
-                      {tool.description && (
-                        <Card.Text style={{ opacity: 0.8, fontSize: '0.9rem' }}>
-                          {tool.description}
-                        </Card.Text>
-                      )}
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
+                      }}
+                    >
+                      <Card.Body className="text-center">
+                        <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>
+                          {tool.icon}
+                        </div>
+                        <Card.Title style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#1e3a5f' }}>
+                          {tool.name}
+                        </Card.Title>
+                        {tool.description && (
+                          <Card.Text style={{ color: '#6c757d', fontSize: '0.9rem' }}>
+                            {tool.description}
+                          </Card.Text>
+                        )}
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+          )
+        })}
+
+        {tools.length === 0 && (
+          <div className="text-center p-5" style={{ background: '#f8f9fa', borderRadius: '8px' }}>
+            <h3>🔧</h3>
+            <p style={{ color: '#6c757d' }}>
+              No hay herramientas configuradas todavía.
+            </p>
+            <p style={{ color: '#6c757d', fontSize: '0.9rem' }}>
+              Un administrador puede agregar herramientas desde el panel de admin.
+            </p>
           </div>
-        )
-      })}
+        )}
 
-      {/* Si no hay herramientas */}
-      {tools.length === 0 && (
-        <div className="aside1 text-center">
-          <h3>🔧</h3>
-          <p style={{ opacity: 0.8 }}>
-            No hay herramientas configuradas todavía.
-          </p>
-          <p style={{ opacity: 0.6, fontSize: '0.9rem' }}>
-            Un administrador puede agregar herramientas desde el panel de admin.
-          </p>
+        <div className="text-center mt-5">
+          <a href="/" style={{ color: '#1e3a5f' }}>
+            ← Volver al inicio
+          </a>
         </div>
-      )}
-
-      <div className="text-center mt-5">
-        <a href="/" style={{ color: '#fff', opacity: 0.7 }}>
-          ← Volver al inicio
-        </a>
-      </div>
+      </Container>
 
       <style jsx>{`
         .tool-card:hover {
-          transform: translateY(-5px) !important;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+          transform: translateY(-4px);
+          box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important;
         }
       `}</style>
-    </Container>
+    </>
   )
 }

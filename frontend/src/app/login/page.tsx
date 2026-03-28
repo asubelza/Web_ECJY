@@ -8,6 +8,7 @@ import SocialLoginButtons from '@/components/SocialLoginButtons'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
+import Card from 'react-bootstrap/Card'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -28,21 +29,19 @@ export default function LoginPage() {
   }
 
   return (
-    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
-      <div className="w-100" style={{ maxWidth: '400px' }}>
-        <div className="aside1">
-          <h2 className="text-center mb-4">Iniciar Sesión</h2>
-          <p className="text-center mb-4" style={{ opacity: 0.8 }}>
+    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh', background: '#f8f9fa' }}>
+      <Card style={{ width: '100%', maxWidth: '400px', border: 'none', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}>
+        <Card.Body className="p-4">
+          <h2 className="text-center mb-2" style={{ color: '#1e3a5f' }}>Iniciar Sesión</h2>
+          <p className="text-center mb-4" style={{ color: '#6c757d' }}>
             Acceso opcional para gestionar tu cuenta
           </p>
           
           <SocialLoginButtons />
           
           <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3 styled-background">
-              <Form.Label>
-                <strong>Email:</strong>
-              </Form.Label>
+            <Form.Group className="mb-3">
+              <Form.Label style={{ fontWeight: 500 }}>Email</Form.Label>
               <Form.Control
                 type="email"
                 value={email}
@@ -52,10 +51,8 @@ export default function LoginPage() {
               />
             </Form.Group>
 
-            <Form.Group className="mb-4 styled-background">
-              <Form.Label>
-                <strong>Contraseña:</strong>
-              </Form.Label>
+            <Form.Group className="mb-4">
+              <Form.Label style={{ fontWeight: 500 }}>Contraseña</Form.Label>
               <Form.Control
                 type="password"
                 value={password}
@@ -65,12 +62,13 @@ export default function LoginPage() {
               />
             </Form.Group>
 
-            <div className="d-grid gap-2">
+            <div className="d-grid">
               <Button 
                 type="submit" 
-                variant="secondary"
+                variant="primary"
                 disabled={loading}
                 size="lg"
+                style={{ background: '#1e3a5f', border: 'none' }}
               >
                 {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
               </Button>
@@ -78,21 +76,21 @@ export default function LoginPage() {
           </Form>
 
           <div className="text-center mt-4">
-            <p style={{ opacity: 0.8 }}>
+            <p style={{ color: '#6c757d' }}>
               ¿No tienes cuenta?{' '}
-              <Link href="/registro" style={{ color: '#e94560', textDecoration: 'underline' }}>
+              <Link href="/registro" style={{ color: '#1e3a5f', fontWeight: 500 }}>
                 Regístrate aquí
               </Link>
             </p>
           </div>
 
           <div className="text-center mt-3">
-            <Link href="/" style={{ color: '#fff', opacity: 0.7 }}>
+            <Link href="/" style={{ color: '#1e3a5f' }}>
               ← Volver al inicio
             </Link>
           </div>
-        </div>
-      </div>
+        </Card.Body>
+      </Card>
     </Container>
   )
 }
