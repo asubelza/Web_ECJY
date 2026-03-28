@@ -2,36 +2,38 @@
 @import 'reset';
 @import 'aos/dist/aos.css';
 
-@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-.header {
-  position: relative;
-  min-height: 60vh;
-  overflow: hidden;
-
-  .background-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1;
-    opacity: 0.7;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
-.color_nav {
-  background: linear-gradient(135deg, rgba($secondary-color, 0.95), rgba($accent-color, 0.95));
-  backdrop-filter: blur(10px);
+body {
+  font-family: $font-main;
+  color: $text-color;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.navbar-sbs {
+  background: $secondary-color;
+  box-shadow: $box-shadow;
   padding: 1rem 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 
   .navbar-brand {
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
+    img, .logo-text {
+      height: 40px;
+    }
+    
+    .logo-text {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: $primary-color;
     }
   }
 
@@ -39,211 +41,345 @@
     color: $text-color !important;
     font-weight: 500;
     padding: 0.5rem 1rem !important;
-    transition: all 0.3s ease;
-    border-radius: 5px;
+    transition: color 0.2s ease;
 
-    &:hover,
+    &:hover {
+      color: $primary-color !important;
+    }
+
     &.active {
-      background-color: $highlight-color;
-      transform: translateY(-2px);
+      color: $primary-color !important;
+      font-weight: 600;
+    }
+  }
+
+  .btn-login {
+    background: $primary-color;
+    color: white !important;
+    border-radius: $border-radius;
+    padding: 0.5rem 1.25rem !important;
+    font-weight: 500;
+
+    &:hover {
+      background: darken($primary-color, 8%);
+    }
+  }
+
+  .btn-register {
+    background: $highlight-color;
+    color: white !important;
+    border-radius: $border-radius;
+    padding: 0.5rem 1.25rem !important;
+    font-weight: 500;
+
+    &:hover {
+      background: darken($highlight-color, 8%);
     }
   }
 
   .dropdown-menu {
-    background: $secondary-color;
-    border: 1px solid $accent-color;
+    border: none;
+    box-shadow: $box-shadow-hover;
+    border-radius: $border-radius;
 
     .dropdown-item {
       color: $text-color;
-      transition: all 0.2s ease;
+      padding: 0.5rem 1rem;
 
       &:hover {
-        background-color: $highlight-color;
+        background: $accent-color;
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+.hero-section {
+  background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 10%) 100%);
+  color: white;
+  padding: 5rem 0 4rem;
+  text-align: center;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+
+    @media (min-width: 768px) {
+      font-size: 3rem;
+    }
+  }
+
+  p {
+    font-size: 1.125rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+  }
+
+  .btn-cta {
+    background: white;
+    color: $primary-color;
+    padding: 0.875rem 2rem;
+    border-radius: $border-radius;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    display: inline-block;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      color: $primary-color;
+    }
+  }
+}
+
+.section {
+  padding: 4rem 0;
+
+  &.section-light {
+    background: $accent-color;
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $primary-color;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.service-card {
+  background: $secondary-color;
+  border-radius: $border-radius;
+  padding: 2rem;
+  box-shadow: $box-shadow;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $box-shadow-hover;
+  }
+
+  .service-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba($primary-color, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    color: $primary-color;
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $primary-color;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    color: $text-light;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+}
+
+.specialists-section {
+  background: $secondary-color;
+  padding: 3rem;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+}
+
+.table-sbs {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  th {
+    font-weight: 600;
+    color: $primary-color;
+    background: rgba($primary-color, 0.05);
+  }
+
+  tbody tr {
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: rgba($primary-color, 0.03);
+    }
+  }
+}
+
+.footer-sbs {
+  background: $primary-color;
+  color: white;
+  padding: 4rem 0 2rem;
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
         color: white;
       }
     }
   }
-}
 
-.main {
-  padding: 2rem 0;
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.75rem;
 
-  .img {
-    width: 100%;
-    border-radius: 15px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-  }
-}
-
-.aside1,
-.aside2 {
-  padding: 2rem;
-  margin: 2rem 0;
-  background: linear-gradient(135deg, $secondary-color, $accent-color);
-  border-radius: 15px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-
-  h2 {
-    font-family: $font-main;
-    font-size: 1.8rem;
-    line-height: 1.8;
-  }
-}
-
-.section1 {
-  padding: 3rem;
-  margin: 2rem 0;
-  background: linear-gradient(45deg, $highlight-color, $accent-color);
-  border-radius: 15px;
-  text-align: center;
-
-  h2 {
-    font-family: $font-main;
-    font-size: 1.5rem;
-
-    p {
-      margin-bottom: 1rem;
+    svg {
+      width: 18px;
+      height: 18px;
+      opacity: 0.8;
     }
   }
-}
 
-.section2 {
-  padding: 2rem;
-  margin: 2rem 0;
-  background: $secondary-color;
-  border-radius: 15px;
+  .social-links {
+    display: flex;
+    gap: 1rem;
 
-  h2 {
-    font-family: $font-main;
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
-
-  .table {
-    background: $accent-color;
-    color: $text-color;
-    border-radius: 10px;
-    overflow: hidden;
-
-    thead {
-      background: $highlight-color;
-    }
-
-    th, td {
-      padding: 1rem;
-      border-color: rgba(255, 255, 255, 0.1);
-    }
-
-    tbody tr {
+    a {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: all 0.2s ease;
 
       &:hover {
-        background: rgba($highlight-color, 0.2);
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+
+      img {
+        width: 18px;
+        height: 18px;
       }
     }
   }
-}
 
-.footer {
-  padding: 2rem;
-  margin-top: 3rem;
-  background: linear-gradient(135deg, $secondary-color, $primary-color);
-  text-align: center;
-  border-radius: 15px 15px 0 0;
-
-  h2 {
-    font-family: $font-main;
-    font-size: 1.2rem;
-
-    .icono {
-      width: 35px;
-      height: 35px;
-      margin: 0 0.5rem;
-      transition: transform 0.3s ease;
-      border-radius: 50%;
-
-      &:hover {
-        transform: scale(1.2);
-      }
-    }
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 2rem;
+    text-align: center;
+    font-size: 0.875rem;
+    opacity: 0.7;
   }
 }
 
 .styled-background {
-  background: rgba($secondary-color, 0.8);
-  padding: 1rem;
-  border-radius: 10px;
-  margin-bottom: 1.5rem;
+  background: $accent-color;
+  padding: 2rem;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
 
   .form-label {
     color: $text-color;
-    font-weight: 600;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
   }
 
   .form-control {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: $text-color;
-
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.5);
-    }
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: $border-radius;
+    padding: 0.75rem 1rem;
 
     &:focus {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: $highlight-color;
-      box-shadow: 0 0 0 0.2rem rgba($highlight-color, 0.25);
-      color: $text-color;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
     }
   }
 }
 
-.btn-warning {
-  background: $highlight-color;
-  border-color: $highlight-color;
+.btn-primary {
+  background: $primary-color;
+  border: none;
+  border-radius: $border-radius;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
 
   &:hover {
-    background: darken($highlight-color, 10%);
-    border-color: darken($highlight-color, 10%);
+    background: darken($primary-color, 8%);
+    color: white;
   }
 }
 
 .btn-secondary {
   background: $accent-color;
-  border-color: $accent-color;
+  color: $text-color;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: $border-radius;
 
   &:hover {
-    background: darken($accent-color, 10%);
-    border-color: darken($accent-color, 10%);
+    background: darken($accent-color, 5%);
+    color: $text-color;
   }
 }
 
 .logoSize {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+  height: 40px;
+  width: auto;
 }
 
 [data-aos] {
   pointer-events: auto !important;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.6s ease-out forwards;
-}
-
-// Estilos para botones de login social
 .social-login-buttons {
   margin-bottom: 2rem;
 
@@ -252,13 +388,13 @@
     align-items: center;
     text-align: center;
     margin-bottom: 1.5rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: $text-light;
 
     &::before,
     &::after {
       content: '';
       flex: 1;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     span {
@@ -278,10 +414,12 @@
       justify-content: center;
       gap: 0.75rem;
       padding: 0.75rem 1rem;
-      border: none;
-      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: $border-radius;
       font-weight: 500;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
+      background: $secondary-color;
+      color: $text-color;
 
       svg {
         flex-shrink: 0;
@@ -289,43 +427,7 @@
 
       &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      }
-
-      &.google {
-        background: #ffffff;
-        color: #333;
-
-        &:hover {
-          background: #f5f5f5;
-        }
-      }
-
-      &.facebook {
-        background: #1877f2;
-        color: white;
-
-        &:hover {
-          background: #166fe5;
-        }
-      }
-
-      &.microsoft {
-        background: #2f2f2f;
-        color: white;
-
-        &:hover {
-          background: #1f1f1f;
-        }
-      }
-
-      &.instagram {
-        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-        color: white;
-
-        &:hover {
-          opacity: 0.9;
-        }
+        box-shadow: $box-shadow;
       }
     }
   }
@@ -337,7 +439,8 @@
 }
 
 .skeleton {
-  background: linear-gradient(90deg, #1a1a2e 25%, #2d2d44 50%, #1a1a2e 75%);
+  background: linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
+  border-radius: $border-radius;
 }

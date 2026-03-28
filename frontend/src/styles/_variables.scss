@@ -1,17 +1,22 @@
-$primary-color: #1a1a2e;
-$secondary-color: #16213e;
-$accent-color: #0f3460;
-$highlight-color: #e94560;
-$text-color: #ffffff;
+$primary-color: #1e3a5f;
+$secondary-color: #ffffff;
+$accent-color: #f8f9fa;
+$highlight-color: #2d5a87;
+$text-color: #333333;
 $text-dark: #333333;
+$text-light: #6c757d;
 
-$font-main: 'Edu AU VIC WA NT Hand', cursive;
-$font-sans: 'Playpen Sans', sans-serif;
+$font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
 $breakpoint-sm: 576px;
 $breakpoint-md: 768px;
 $breakpoint-lg: 992px;
 $breakpoint-xl: 1200px;
+
+$border-radius: 8px;
+$box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+$box-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.12);
 
 @mixin respond-to($breakpoint) {
   @if $breakpoint == sm {

@@ -8,16 +8,15 @@ import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import NavDropdown from 'react-bootstrap/NavDropdown'
-import Image from 'next/image'
 
 export default function Navigation() {
   const pathname = usePathname()
-  const [scrolled, setScrolled] = useState(false)
   const { user, isAuthenticated, isAdmin, logout } = useAuth()
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      setScrolled(window.scrollY > 20)
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
@@ -28,63 +27,43 @@ export default function Navigation() {
   return (
     <Navbar 
       expand="lg" 
-      className={`color_nav ${scrolled ? 'scrolled' : ''}`}
+      className="navbar-sbs"
       fixed="top"
     >
-      <Container fluid>
+      <Container>
         <Navbar.Brand as={Link} href="/">
-          <Image
-            src="/images/favicon.ico"
-            alt="Logo"
-            width={50}
-            height={50}
-            className="logoSize"
-          />
+          <span className="logo-text">Estudio JY</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
           <Nav className="ms-auto">
             <Nav.Link as={Link} href="/" active={isActive('/')}>
-              Home
+              Inicio
             </Nav.Link>
             <Nav.Link 
               as={Link} 
               href="/servicios-contables" 
               active={isActive('/servicios-contables')}
             >
-              Servicios contables
+              Servicios
             </Nav.Link>
             <Nav.Link 
               as={Link} 
               href="/asesoria-economica" 
               active={isActive('/asesoria-economica')}
             >
-              Asesoria Economica y Financiera
+              Asesoría
             </Nav.Link>
             <Nav.Link 
               as={Link} 
               href="/automatizaciones" 
               active={isActive('/automatizaciones')}
             >
-              Automatizaciones digitales
+              Automatizaciones
             </Nav.Link>
-            <NavDropdown title="Contacto" id="contact-dropdown">
-              <NavDropdown.Item 
-                href="https://wa.me/+5491121729306" 
-                target="_blank"
-              >
-                Telefono
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} href="/contacto">
-                Mail
-              </NavDropdown.Item>
-              <NavDropdown.Item 
-                href="https://www.facebook.com/contable.jy" 
-                target="_blank"
-              >
-                Redes Sociales
-              </NavDropdown.Item>
-            </NavDropdown>
+            <Nav.Link as={Link} href="/contacto" active={isActive('/contacto')}>
+              Contacto
+            </Nav.Link>
 
             {isAuthenticated ? (
               <>
@@ -92,12 +71,7 @@ export default function Navigation() {
                   Mi Backoffice
                 </Nav.Link>
                 <NavDropdown 
-                  title={
-                    <span>
-                      <span style={{ marginRight: '5px' }}>👤</span>
-                      {user?.name?.split(' ')[0]}
-                    </span>
-                  } 
+                  title={user?.name?.split(' ')[0] || 'Usuario'} 
                   id="user-dropdown"
                 >
                   <NavDropdown.Item as={Link} href="/perfil">
@@ -125,25 +99,16 @@ export default function Navigation() {
                   )}
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={logout}>
-                    Cerrar Sesion
+                    Cerrar Sesión
                   </NavDropdown.Item>
                 </NavDropdown>
               </>
             ) : (
               <>
-                <Nav.Link as={Link} href="/login" active={isActive('/login')}>
-                  Iniciar Sesion
+                <Nav.Link as={Link} href="/login" active={isActive('/login')} className="btn-login">
+                  Iniciar Sesión
                 </Nav.Link>
-                <Nav.Link 
-                  as={Link} 
-                  href="/registro" 
-                  active={isActive('/registro')}
-                  style={{ 
-                    background: '#e94560',
-                    borderRadius: '5px',
-                    marginLeft: '5px'
-                  }}
-                >
+                <Nav.Link as={Link} href="/registro" active={isActive('/registro')} className="btn-register">
                   Registrarse
                 </Nav.Link>
               </>

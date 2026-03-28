@@ -39,9 +39,9 @@ export default function ContactForm() {
 
   return (
     <Form onSubmit={handleSubmit} id="contact_form">
-      <Form.Group className="mb-3 styled-background">
-        <Form.Label>
-          <strong>Ingrese su Apellido y Nombres:</strong>
+      <Form.Group className="mb-3">
+        <Form.Label style={{ fontWeight: 500, marginBottom: '0.5rem', display: 'block' }}>
+          Nombre y Apellido
         </Form.Label>
         <Form.Control
           as="textarea"
@@ -51,12 +51,13 @@ export default function ContactForm() {
           value={formData.name}
           onChange={handleChange}
           required
+          placeholder="Tu nombre completo"
         />
       </Form.Group>
 
-      <Form.Group className="mb-3 styled-background">
-        <Form.Label>
-          <strong>Ingrese su direccion de mail:</strong>
+      <Form.Group className="mb-3">
+        <Form.Label style={{ fontWeight: 500, marginBottom: '0.5rem', display: 'block' }}>
+          Correo Electrónico
         </Form.Label>
         <Form.Control
           type="email"
@@ -64,27 +65,27 @@ export default function ContactForm() {
           name="email"
           value={formData.email}
           onChange={handleChange}
-          placeholder="name@example.com"
+          placeholder="tu@email.com"
           required
         />
       </Form.Group>
 
-      <Form.Group className="mb-3 styled-background">
-        <Form.Label>
-          <strong>Telefono (opcional):</strong>
+      <Form.Group className="mb-3">
+        <Form.Label style={{ fontWeight: 500, marginBottom: '0.5rem', display: 'block' }}>
+          Teléfono (opcional)
         </Form.Label>
         <Form.Control
           type="tel"
           name="phone"
           value={formData.phone}
           onChange={handleChange}
-          placeholder="+54 9 11 1234-5678"
+          placeholder="+54 11 1234-5678"
         />
       </Form.Group>
 
-      <Form.Group className="mb-3 styled-background">
-        <Form.Label>
-          <strong>Ingrese brevemente su consulta:</strong>
+      <Form.Group className="mb-4">
+        <Form.Label style={{ fontWeight: 500, marginBottom: '0.5rem', display: 'block' }}>
+          Tu Consulta
         </Form.Label>
         <Form.Control
           as="textarea"
@@ -93,21 +94,15 @@ export default function ContactForm() {
           name="message"
           value={formData.message}
           onChange={handleChange}
+          placeholder="Escribinos tu consulta y te responderemos a la brevedad..."
           required
         />
       </Form.Group>
 
-      <div className="d-flex gap-2">
-        <Button 
-          type="reset" 
-          variant="warning"
-          onClick={() => setFormData({ name: '', email: '', message: '', phone: '' })}
-        >
-          Limpiar Formulario
-        </Button>
+      <div className="d-flex gap-3 justify-content-center">
         <Button 
           type="submit" 
-          variant="secondary"
+          className="btn-primary px-4"
           disabled={loading}
         >
           {loading ? 'Enviando...' : 'Enviar Consulta'}

@@ -2,19 +2,18 @@
 
 import { useAOS } from '@/hooks/useAOS'
 import Navigation from '@/components/Navigation'
-import VideoBackground from '@/components/VideoBackground'
 import Footer from '@/components/Footer'
-import Image from 'next/image'
+import Link from 'next/link'
 
 const servicios = [
   {
     titulo: 'Balance General',
-    descripcion: 'Elaboracion de estados contables anuales conforme a normativas vigentes.',
+    descripcion: 'Elaboración de estados contables anuales conforme a normativas vigentes.',
     icono: '📊'
   },
   {
-    titulo: 'Liquidacion de Impuestos',
-    descripcion: 'Calculo y presentacion de declaraciones juradas de IVA, Ganancias y otros.',
+    titulo: 'Liquidación de Impuestos',
+    descripcion: 'Cálculo y presentación de declaraciones juradas de IVA, Ganancias y otros.',
     icono: '💰'
   },
   {
@@ -24,17 +23,17 @@ const servicios = [
   },
   {
     titulo: 'Balances Trimestrales',
-    descripcion: 'Estados contables periodicos para seguimiento de gestion.',
+    descripcion: 'Estados contables periódicos para seguimiento de gestión.',
     icono: '📈'
   },
   {
     titulo: 'Certificaciones',
-    descripcion: 'Certificaciones contables para tramites bancarios y comerciales.',
+    descripcion: 'Certificaciones contables para trámites bancarios y comerciales.',
     icono: '✅'
   },
   {
-    titulo: 'Auditorias',
-    descripcion: 'Revision y verificacion de estados contables y procedimientos.',
+    titulo: 'Auditorías',
+    descripcion: 'Revisión y verificación de estados contables y procedimientos.',
     icono: '🔍'
   }
 ]
@@ -44,47 +43,55 @@ export default function ServiciosContablesPage() {
 
   return (
     <>
-      <header className="header">
-        <VideoBackground />
-        <Navigation />
-      </header>
+      <Navigation />
 
-      <div className="container" style={{ paddingTop: '100px' }}>
-        <section className="section2" data-aos="fade-up">
-          <h2>Servicios Contables</h2>
-          <p style={{ textAlign: 'center', marginBottom: '2rem' }}>
+      <section className="hero-section" style={{ paddingTop: '8rem' }} data-aos="fade-up">
+        <Container>
+          <h1 data-aos="fade-up" data-aos-delay="100">
+            Servicios Contables
+          </h1>
+          <p data-aos="fade-up" data-aos-delay="200">
             Soluciones contables integrales para tu empresa
           </p>
-        </section>
+        </Container>
+      </section>
 
-        <div className="row g-4 mb-4">
-          {servicios.map((servicio, index) => (
-            <div 
-              key={index} 
-              className="col-md-6 col-lg-4"
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
-            >
-              <div className="aside1" style={{ height: '100%' }}>
-                <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem' }}>
-                  {servicio.icono} {servicio.titulo}
-                </h3>
-                <p style={{ opacity: 0.9 }}>{servicio.descripcion}</p>
+      <section className="section">
+        <Container>
+          <div className="services-grid">
+            {servicios.map((servicio, index) => (
+              <div 
+                key={index} 
+                className="service-card"
+                data-aos="fade-up"
+                data-aos-delay={index * 100}
+              >
+                <div className="service-icon">{servicio.icono}</div>
+                <h3>{servicio.titulo}</h3>
+                <p>{servicio.descripcion}</p>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </Container>
+      </section>
 
-        <section className="section1" data-aos="flip-left">
-          <h2>
-            ¿Necesitas un servicio personalizado?
-            <br />
-            Contactanos para una consulta gratuita
-          </h2>
-        </section>
-      </div>
+      <section className="section section-light">
+        <Container>
+          <div style={{ textAlign: 'center', maxWidth: '600px', margin: '0 auto' }} data-aos="fade-up">
+            <h2 style={{ marginBottom: '1rem' }}>¿Necesitás un servicio personalizado?</h2>
+            <p style={{ marginBottom: '1.5rem', color: '#6c757d' }}>
+              Contactanos para una consulta gratuita y te asesoramos sobre la mejor solución para tu empresa.
+            </p>
+            <Link href="/contacto" className="btn-cta" style={{ background: '#1e3a5f', color: 'white' }}>
+              Contactanos
+            </Link>
+          </div>
+        </Container>
+      </section>
 
       <Footer />
     </>
   )
 }
+
+import { Container } from 'react-bootstrap'
