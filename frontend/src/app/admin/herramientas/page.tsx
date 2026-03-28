@@ -174,7 +174,7 @@ export default function AdminHerramientasPage() {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h1 style={{ color: '#1e3a5f' }}>Herramientas Digitales</h1>
         <div className="d-flex gap-3 align-items-center">
-          <a href="/admin" style={{ color: '#1e3a5f' }}>
+          <a href="/admin" className="back-btn">
             ← Volver al panel
           </a>
           <Button variant="primary" onClick={openCreateModal}>
@@ -403,6 +403,24 @@ export default function AdminHerramientasPage() {
           </Form>
         </Modal.Body>
       </Modal>
+
+      <style jsx>{`
+        .back-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: #1e3a5f;
+          padding: 0.5rem 1rem;
+          border-radius: 8px;
+          transition: all 0.2s ease;
+          text-decoration: none;
+        }
+        .back-btn:hover {
+          background: #f8f9fa;
+          color: #1e3a5f;
+          transform: translateX(-4px);
+        }
+      `}</style>
     </Container>
   )
 }

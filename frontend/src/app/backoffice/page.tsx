@@ -205,7 +205,7 @@ export default function BackofficePage() {
         )}
 
         <div className="text-center mt-5">
-          <a href="/" style={{ color: '#1e3a5f' }}>
+          <a href="/" className="back-btn">
             ← Volver al inicio
           </a>
         </div>
@@ -215,6 +215,21 @@ export default function BackofficePage() {
         .tool-card:hover {
           transform: translateY(-4px);
           box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important;
+        }
+        .back-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: #1e3a5f;
+          padding: 0.5rem 1rem;
+          border-radius: 8px;
+          transition: all 0.2s ease;
+          text-decoration: none;
+        }
+        .back-btn:hover {
+          background: #f8f9fa;
+          color: #1e3a5f;
+          transform: translateX(-4px);
         }
       `}</style>
     </>
