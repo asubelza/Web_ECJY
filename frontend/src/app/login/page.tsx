@@ -29,88 +29,90 @@ export default function LoginPage() {
   }
 
   return (
-    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh', background: '#f8f9fa' }}>
-      <Card style={{ width: '100%', maxWidth: '400px', border: 'none', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}>
-        <Card.Body className="p-4">
-          <h2 className="text-center mb-2" style={{ color: '#1e3a5f' }}>Iniciar Sesión</h2>
-          <p className="text-center mb-4" style={{ color: '#6c757d' }}>
-            Acceso opcional para gestionar tu cuenta
-          </p>
-          
-          <SocialLoginButtons />
-          
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-              <Form.Label style={{ fontWeight: 500 }}>Email</Form.Label>
-              <Form.Control
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="tu@email.com"
-                required
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-4">
-              <Form.Label style={{ fontWeight: 500 }}>Contraseña</Form.Label>
-              <Form.Control
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Tu contraseña"
-                required
-              />
-            </Form.Group>
-
-            <div className="d-grid">
-              <Button 
-                type="submit" 
-                variant="primary"
-                disabled={loading}
-                size="lg"
-                style={{ background: '#1e3a5f', border: 'none' }}
-              >
-                {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
-              </Button>
-            </div>
-          </Form>
-
-          <div className="text-center mt-4">
-            <p style={{ color: '#6c757d' }}>
-              ¿No tienes cuenta?{' '}
-              <Link href="/registro" style={{ color: '#1e3a5f', fontWeight: 500 }}>
-                Regístrate aquí
-              </Link>
+    <>
+      <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh', background: '#f8f9fa' }}>
+        <Card style={{ width: '100%', maxWidth: '400px', border: 'none', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}>
+          <Card.Body className="p-4">
+            <h2 className="text-center mb-2" style={{ color: '#1e3a5f' }}>Iniciar Sesión</h2>
+            <p className="text-center mb-4" style={{ color: '#6c757d' }}>
+              Acceso opcional para gestionar tu cuenta
             </p>
-          </div>
+            
+            <SocialLoginButtons />
+            
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3">
+                <Form.Label style={{ fontWeight: 500 }}>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="tu@email.com"
+                  required
+                />
+              </Form.Group>
 
-          <div className="text-center mt-3">
-            <Link href="/" className="back-btn">
-              ← Volver al inicio
-            </Link>
-          </div>
-        </Card.Body>
-      </Card>
-    </Container>
-    <style jsx>{`
-      .back-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: #1e3a5f;
-        background: #ffffff;
-        padding: 0.6rem 1.2rem;
-        border-radius: 8px;
-        border: 1px solid #1e3a5f;
-        transition: all 0.2s ease;
-        text-decoration: none;
-        font-weight: 500;
-      }
-      .back-btn:hover {
-        background: #1e3a5f;
-        color: #ffffff;
-        transform: translateX(-4px);
-      }
-    `}</style>
+              <Form.Group className="mb-4">
+                <Form.Label style={{ fontWeight: 500 }}>Contraseña</Form.Label>
+                <Form.Control
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Tu contraseña"
+                  required
+                />
+              </Form.Group>
+
+              <div className="d-grid">
+                <Button 
+                  type="submit" 
+                  variant="primary"
+                  disabled={loading}
+                  size="lg"
+                  style={{ background: '#1e3a5f', border: 'none' }}
+                >
+                  {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+                </Button>
+              </div>
+            </Form>
+
+            <div className="text-center mt-4">
+              <p style={{ color: '#6c757d' }}>
+                ¿No tienes cuenta?{' '}
+                <Link href="/registro" style={{ color: '#1e3a5f', fontWeight: 500 }}>
+                  Regístrate aquí
+                </Link>
+              </p>
+            </div>
+
+            <div className="text-center mt-3">
+              <Link href="/" className="back-btn">
+                ← Volver al inicio
+              </Link>
+            </div>
+          </Card.Body>
+        </Card>
+      </Container>
+      <style jsx>{`
+        .back-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: #1e3a5f;
+          background: #ffffff;
+          padding: 0.6rem 1.2rem;
+          border-radius: 8px;
+          border: 1px solid #1e3a5f;
+          transition: all 0.2s ease;
+          text-decoration: none;
+          font-weight: 500;
+        }
+        .back-btn:hover {
+          background: #1e3a5f;
+          color: #ffffff;
+          transform: translateX(-4px);
+        }
+      `}</style>
+    </>
   )
 }
