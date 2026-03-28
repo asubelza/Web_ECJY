@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { Container } from 'react-bootstrap'
 
 const socialLinks = [
   { name: 'Facebook', url: 'https://www.facebook.com/contable.jy', icon: '/images/facebook.avif' },
