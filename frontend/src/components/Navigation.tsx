@@ -41,7 +41,6 @@ export default function Navigation() {
           />
           <span className="logo-text d-none d-md-inline">Estudio Contable JY</span>
         </Navbar.Brand>
-        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
           <Nav className="ms-auto">
