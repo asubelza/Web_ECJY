@@ -35,11 +35,11 @@ export default function Navigation() {
           <img 
             src="/images/logos/Logo_Mediano.png" 
             alt="Estudio Contable JY" 
-            height="45"
+            height="55"
             className="me-2"
             style={{ objectFit: 'contain' }}
           />
-          <span className="logo-text d-none d-md-inline">Estudio Contable JY</span>
+          <span className="logo-text d-none d-lg-inline" style={{ fontSize: '1.2rem' }}>Estudio Contable JY</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
