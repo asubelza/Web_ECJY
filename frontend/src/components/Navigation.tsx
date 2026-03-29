@@ -31,13 +31,16 @@ export default function Navigation() {
       fixed="top"
     >
       <Container>
-        <Navbar.Brand as={Link} href="/">
+        <Navbar.Brand as={Link} href="/" className="d-flex align-items-center">
           <img 
             src="/images/logos/Logo_Mediano.png" 
-            alt="Estudio JY" 
-            height="40"
-            style={{ marginRight: '10px' }}
+            alt="Estudio Contable JY" 
+            height="45"
+            className="me-2"
+            style={{ objectFit: 'contain' }}
           />
+          <span className="logo-text d-none d-md-inline">Estudio Contable JY</span>
+        </Navbar.Brand>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">

@@ -16,7 +16,15 @@ export default function HomePage() {
       <Navigation />
 
       <section className="hero-section" data-aos="fade-up">
-        <Container>
+        <Container className="text-center">
+          <img 
+            src="/images/logos/Logo_Grande.png" 
+            alt="Estudio Contable JY" 
+            className="mb-4"
+            style={{ maxHeight: '100px', objectFit: 'contain' }}
+            data-aos="fade-up"
+            data-aos-delay="50"
+          />
           <h1 data-aos="fade-up" data-aos-delay="100">
             Servicios contables, financieros y tecnológicos
           </h1>

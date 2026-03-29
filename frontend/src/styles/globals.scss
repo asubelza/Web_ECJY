@@ -23,16 +23,18 @@ body {
 .navbar-sbs {
   background: $secondary-color;
   box-shadow: $box-shadow;
-  padding: 1rem 0;
+  padding: 0.75rem 0;
 
   .navbar-brand {
-    img, .logo-text {
-      height: 40px;
+    img {
+      height: 45px;
+      width: auto;
+      object-fit: contain;
     }
     
     .logo-text {
       font-weight: 700;
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       color: $primary-color;
     }
   }
