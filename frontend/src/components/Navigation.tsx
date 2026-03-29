@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
+import { useTheme } from '@/context/ThemeContext'
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
@@ -12,6 +13,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown'
 export default function Navigation() {
   const pathname = usePathname()
   const { user, isAuthenticated, isAdmin, logout } = useAuth()
+  const { theme, toggleTheme } = useTheme()
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -43,7 +45,7 @@ export default function Navigation() {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
-          <Nav className="ms-auto">
+          <Nav className="ms-auto align-items-center">
             <Nav.Link as={Link} href="/" active={isActive('/')}>
               Inicio
             </Nav.Link>
@@ -71,6 +73,14 @@ export default function Navigation() {
             <Nav.Link as={Link} href="/contacto" active={isActive('/contacto')}>
               Contacto
             </Nav.Link>
+
+            <button 
+              onClick={toggleTheme}
+              className="theme-toggle-btn ms-2"
+              title={theme === 'light' ? 'Modo oscuro' : 'Modo claro'}
+            >
+              {theme === 'light' ? '🌙' : '☀️'}
+            </button>
 
             {isAuthenticated ? (
               <>
