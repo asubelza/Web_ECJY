@@ -466,15 +466,14 @@ body {
   }
 }
 
-[data-theme="dark"] {
-  body {
-    background-color: #1a1a2e;
-    color: #e0e0e0;
-  }
+  [data-theme="dark"] {
+    .navbar-sbs {
+      background: #16213e;
 
-  .navbar-sbs {
-    background: #16213e;
-  }
+      .logo-text {
+        color: #90caf9 !important;
+      }
+    }
 
   .footer-sbs {
     background: #16213e;

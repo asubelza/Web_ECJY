@@ -32,7 +32,7 @@ export default function Navigation() {
       className="navbar-sbs"
       fixed="top"
     >
-      <Container>
+      <Container fluid>
         <Navbar.Brand as={Link} href="/" className="d-flex align-items-center">
           <img 
             src="/images/logos/Logo_Mediano.png" 
