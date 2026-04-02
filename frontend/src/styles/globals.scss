@@ -546,4 +546,67 @@ body {
       border-color: #c73e54;
     }
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #ffffff !important;
+  }
+
+  p, span, li {
+    color: #e8e8e8 !important;
+  }
+
+  .nav-link {
+    color: #e0e0e0 !important;
+
+    &:hover {
+      color: #ffffff !important;
+    }
+
+    &.active {
+      color: #ffffff !important;
+    }
+  }
+
+  .text-muted {
+    color: #b0b0b0 !important;
+  }
+
+  a {
+    color: #90caf9 !important;
+  }
+
+  .table {
+    color: #e8e8e8 !important;
+
+    th, td {
+      border-color: #2a3f5f !important;
+    }
+  }
+
+  .dropdown-menu {
+    background-color: #16213e;
+    border-color: #2a3f5f;
+
+    .dropdown-item {
+      color: #e0e0e0 !important;
+
+      &:hover {
+        background-color: #0f3460;
+        color: #ffffff !important;
+      }
+    }
+  }
+
+  .modal-content {
+    background-color: #16213e;
+    color: #e0e0e0;
+  }
+
+  .form-label {
+    color: #e0e0e0 !important;
+  }
+
+  .alert {
+    color: #e0e0e0;
+  }
 }

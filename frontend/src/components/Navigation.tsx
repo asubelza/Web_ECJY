@@ -37,12 +37,23 @@ export default function Navigation() {
           <img 
             src="/images/logos/Logo_Mediano.png" 
             alt="Estudio Contable JY" 
-            height="55"
+            height="65"
             className="me-2"
             style={{ objectFit: 'contain' }}
           />
-          <span className="logo-text d-none d-lg-inline" style={{ fontSize: '1.2rem' }}>Estudio Contable JY</span>
+          <span className="logo-text d-none d-lg-inline" style={{ fontSize: '1.3rem' }}>Estudio Contable JY</span>
         </Navbar.Brand>
+        
+        <div className="d-flex align-items-center ms-auto order-lg-last">
+          <button 
+            onClick={toggleTheme}
+            className="theme-toggle-btn"
+            title={theme === 'light' ? 'Modo oscuro' : 'Modo claro'}
+          >
+            {theme === 'light' ? '🌙' : '☀️'}
+          </button>
+        </div>
+        
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
           <Nav className="ms-auto align-items-center">
@@ -73,14 +84,6 @@ export default function Navigation() {
             <Nav.Link as={Link} href="/contacto" active={isActive('/contacto')}>
               Contacto
             </Nav.Link>
-
-            <button 
-              onClick={toggleTheme}
-              className="theme-toggle-btn ms-2"
-              title={theme === 'light' ? 'Modo oscuro' : 'Modo claro'}
-            >
-              {theme === 'light' ? '🌙' : '☀️'}
-            </button>
 
             {isAuthenticated ? (
               <>

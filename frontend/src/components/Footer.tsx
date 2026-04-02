@@ -20,10 +20,10 @@ export default function Footer() {
             <img 
               src="/images/logos/Logo_Grande.png" 
               alt="Estudio Contable JY" 
-              style={{ height: '60px', marginBottom: '1rem', objectFit: 'contain' }}
+              style={{ height: '80px', marginBottom: '1rem', objectFit: 'contain', background: 'transparent' }}
               className="d-block"
             />
-            <p style={{ opacity: 0.8, fontSize: '0.9rem', marginBottom: '1rem' }}>
+            <p style={{ opacity: 0.9, fontSize: '0.95rem', marginBottom: '1rem' }}>
               Servicios contables, financieros y tecnológicos para hacer crecer tu PyME.
             </p>
             <div className="social-links">

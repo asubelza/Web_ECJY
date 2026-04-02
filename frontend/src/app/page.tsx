@@ -21,7 +21,7 @@ export default function HomePage() {
             src="/images/logos/Logo_Grande.png" 
             alt="Estudio Contable JY" 
             className="mb-4"
-            style={{ maxHeight: '100px', objectFit: 'contain' }}
+            style={{ maxHeight: '140px', objectFit: 'contain', background: 'transparent' }}
             data-aos="fade-up"
             data-aos-delay="50"
           />
