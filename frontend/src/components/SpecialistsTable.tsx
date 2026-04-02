@@ -41,7 +41,7 @@ export default function SpecialistsTable() {
     <Table striped hover className="table">
       <thead>
         <tr>
-          <th>Area</th>
+          <th>Cargo</th>
           <th>Especialista</th>
         </tr>
       </thead>

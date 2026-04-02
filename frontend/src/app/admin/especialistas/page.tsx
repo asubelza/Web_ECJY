@@ -150,7 +150,7 @@ export default function AdminEspecialistasPage() {
           <thead style={{ background: '#f8f9fa' }}>
             <tr>
               <th style={{ color: '#1e3a5f' }}>Orden</th>
-              <th style={{ color: '#1e3a5f' }}>Área</th>
+              <th style={{ color: '#1e3a5f' }}>Cargo</th>
               <th style={{ color: '#1e3a5f' }}>Nombre</th>
               <th style={{ color: '#1e3a5f' }}>Estado</th>
               <th style={{ color: '#1e3a5f' }}>Acciones</th>
@@ -209,7 +209,7 @@ export default function AdminEspecialistasPage() {
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
-              <Form.Label>Área</Form.Label>
+              <Form.Label>Cargo</Form.Label>
               <Form.Control
                 type="text"
                 value={formData.area}
