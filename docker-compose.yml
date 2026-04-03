@@ -114,6 +114,21 @@ services:
     networks:
       - app-network
 
+  nginx:
+    image: nginx:alpine
+    container_name: estudio_jy_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+      - cruce_frontend
+    networks:
+      - app-network
+
 volumes:
   mongodb_data:
 
