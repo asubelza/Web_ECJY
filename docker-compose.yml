@@ -38,6 +38,8 @@ services:
       dockerfile: Dockerfile
     container_name: estudio_jy_backend
     restart: unless-stopped
+    env_file:
+      - .env
     ports:
       - "5000:5000"
     environment:
