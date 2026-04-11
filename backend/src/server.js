@@ -1,6 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const session = require('express-session');
 const connectDB = require('./config/database');
 const passport = require('./config/passport');
@@ -9,6 +11,34 @@ const Specialist = require('./models/Specialist');
 const Tool = require('./models/Tool');
 
 const app = express();
+
+// Security: Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Demasiadas solicitudes, intenta más tarde'
+});
+app.use('/api/', limiter);
+
+// Security: Helmet headers
+app.use(helmet());
+
+// Security: CORS - solo permitir Production domain
+const allowedOrigins = [
+  'https://estudiocontablejy.com.ar',
+  'http://localhost:3000',
+  'http://localhost:5173'
+];
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 
 const seedDatabase = async () => {
   try {
@@ -75,6 +105,8 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    sameSite: 'strict',
     maxAge: 24 * 60 * 60 * 1000
   }
 }));
