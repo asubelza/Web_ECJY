@@ -12,6 +12,9 @@ Todas las variables de entorno están en `docker-compose.yml` directamente. NO s
 
 ## Antes de cada deploy
 
+### 0. Preguntar siempre antes de merge a main
+ Nunca hacer merge a main sin consultar primero al usuario.
+
 ### 1. Liberar espacio (importante!)
 ```
 docker system prune -af
