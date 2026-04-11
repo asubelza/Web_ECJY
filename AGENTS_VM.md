@@ -1,9 +1,19 @@
 # VM Deployment Guide
 
+## Configuración de Variables de Entorno
+Todas las variables de entorno están en `docker-compose.yml` directamente. NO se usa archivo `.env`.
+
+### Variables importantes del backend:
+- `GOOGLE_CLIENT_ID` - OAuth Google
+- `GOOGLE_CLIENT_SECRET` - OAuth Google
+- `FRONTEND_URL` - URL del frontend (para callbacks)
+- `JWT_SECRET` - Clave secreta para JWT
+- `SMTP_*` - Configuración de email
+
 ## Antes de cada deploy
 
 ### 1. Liberar espacio (importante!)
-```bash
+```
 docker system prune -af
 ```
 
