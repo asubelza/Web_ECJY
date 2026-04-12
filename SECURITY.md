@@ -1,43 +1,83 @@
-# Security Review -Homologacion
+# Security Review - Estudio Contable JY
 
-## Issues Encontrados
+## Estado de Seguridad Actual
 
-### 1. CORS permite cualquier origen
-**Archivo**: `backend/src/server.js`
-**Problema**: `origin: function(origin, callback)` siempre returns `true`
-**Riesgo**:alto
-**Fix**: Validar contra lista de dominios permitidos
+### ✅ Implementado
 
-### 2. Sin rate limiting
-**Problema**: No hay protección contra ataques de fuerza bruta
-**Riesgo**:alto
-**Fix**: Agregar express-rate-limit
+| Medida | Archivo | Estado |
+|--------|---------|--------|
+| Helmet.js headers | server.js:27 | ✅ Implementado |
+| Rate Limiting | server.js:18-24 | ✅ 100 req/15min global |
+| CORS restrictivo | server.js:30-44 | ✅ Solo dominios autorizados |
+| Cookies seguras | server.js:105-115 | ✅ httpOnly + sameSite:strict |
+| Validación de inputs | routes/*.js | ✅ express-validator |
+| Middleware de auth | middleware/auth.js | ✅ JWT verify |
+| Protección XSS | - | ✅ React escapa por defecto |
 
-### 3. Cookies sin atributos seguros
-**Archivo**: `backend/src/server.js`
-**Problema**: 
-- Falta `httpOnly: true` para prevenir XSS
-- Falta `sameSite` policy
-**Riesgo**: medio
-**Fix**: Agregar atributos a cookie config
+### Archivos de CORS autorizados
 
-### 4. JWT sin algoritmo explícito
-**Archivo**: `backend/src/auth.js`
-**Problema**: No especifica algoritmo (usa HS256 por defecto)
-**Riesgo**: bajo
-**Fix**: Especificar algoritmo explícitamente
+```javascript
+const allowedOrigins = [
+  'https://estudiocontablejy.com.ar',  // Producción
+  'http://localhost:3000',              // Desarrollo frontend
+  'http://localhost:5173'               // Vite dev
+];
+```
 
-### 5. Headers de seguridad faltantes
-**Problema**: No hay headers X-Content-Type-Options, X-Frame-Options, etc.
-**Riesgo**: medio
-**Fix**: Agregar helmet.js
+### Rate Limiting
 
-## Recomendaciones immediatas
-1. Agregar helmet.js
-2. Agregar rate limiting a /api/auth/*
-3. Fix CORS para solo permitir dominios已知
+```javascript
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 min
+  max: 100,                 // 100 requests
+  message: 'Demasiadas solicitudes'
+});
+app.use('/api/', limiter);
+```
 
-## Pendiente de Revisión
-- Validación de inputs en formularios
-- Sanitización de datos
-- SQL injection prevention (usar Mongoose ya ayuda)
+## Endpoints de Usuarios (Admin)
+
+| Método | Endpoint | Auth | Descripción |
+|--------|----------|------|-------------|
+| GET | `/api/users` | ✅ Admin | Listar usuarios |
+| GET | `/api/users/stats` | ✅ Admin | Estadísticas dashboard |
+| GET | `/api/users/:id` | ✅ Admin | Ver usuario |
+| POST | `/api/users` | ✅ Admin | Crear usuario |
+| PUT | `/api/users/:id` | ✅ Admin | Editar usuario |
+| PUT | `/api/users/:id/reset-password` | ✅ Admin | Resetear password |
+| DELETE | `/api/users/:id` | ✅ Admin | Eliminar usuario |
+
+### Validación de Create User
+
+```javascript
+body('name').trim().notEmpty()
+body('email').isEmail()
+body('password').isLength({ min: 6 })
+body('role').isIn(['admin', 'user'])
+```
+
+### Validación de Reset Password
+
+```javascript
+body('newPassword').isLength({ min: 6 })
+```
+
+## Recomendaciones Futuras
+
+1. **Rate limiting específico** - Aplicar límites más estrictos a endpoints de auth (login attempts)
+2. **Logging** - Agregar logging de seguridad (intentos de login fallidos)
+3. **Audit trail** - Registrar acciones de admins en log
+4. **Input sanitization** - Agregar sanitización adicional para campos de texto largo
+5. **HTTPS** - Forzar HTTPS en producción (ya configurado con nginx + SSL)
+6. **2FA** - Considerar Two-Factor Authentication para admins
+
+## Políticas de Seguridad
+
+- Contraseñas hasheadas con bcrypt (12 rounds)
+- JWT expira en 7 días
+- Sesiones HTTP-only con SameSite: strict
+- No exponer stack traces en producción
+
+## Reportar Vulnerabilidades
+
+Si encuentras una vulnerabilidad de seguridad, contacta al equipo de desarrollo.

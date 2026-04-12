@@ -4,12 +4,13 @@ Rediseño completo del sitio web usando **Next.js 14** (frontend), **Node.js/Exp
 
 ## 🚀 Características
 
-- **Frontend**: Next.js 14 con React Bootstrap
+- **Frontend**: Next.js 14 con React Bootstrap + modo oscuro
 - **Backend**: Node.js + Express
 - **Base de datos**: MongoDB 7
 - **Autenticación**: JWT + Social Login (Google, Facebook, Microsoft, Instagram)
+- **Admin Panel**: Gestión de usuarios, contactos, especialistas y herramientas
 - **Docker**: Containerización completa
-- **Herramientas**: Integración con herramienta "Cruce ARBA-AGIP"
+- **Seguridad**: Helmet, CORS restrictivo, Rate limiting, cookies seguras
 
 ## 📋 Requisitos
 
@@ -126,6 +127,16 @@ El sitio funciona **sin necesidad de registro**, pero incluye un sistema de aute
 - `POST /api/specialists` - Crear (admin)
 - `PUT /api/specialists/:id` - Actualizar (admin)
 - `DELETE /api/specialists/:id` - Eliminar (admin)
+
+### Usuarios (Admin)
+- `GET /api/users` - Listar usuarios
+- `GET /api/users/stats` - Estadísticas dashboard
+- `POST /api/users` - Crear usuario
+- `PUT /api/users/:id` - Editar usuario
+- `PUT /api/users/:id/reset-password` - Resetear password
+- `DELETE /api/users/:id` - Eliminar usuario
+
+### Herramientas
 
 ## Configuración de Email
 
@@ -302,3 +313,9 @@ Para proyectos personales o pequeños:
 - [ ] Sistema de turnos
 - [ ] Tests automatizados
 - [ ] CI/CD con GitHub Actions
+
+## Documentación Adicional
+
+- [API.md](./API.md) - Documentación completa de endpoints
+- [SECURITY.md](./SECURITY.md) - Revisión de seguridad y políticas
+- [AGENTS_VM.md](./AGENTS_VM.md) - Configuración de la VM en GCP
