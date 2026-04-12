@@ -12,6 +12,9 @@ const Tool = require('./models/Tool');
 
 const app = express();
 
+// Trust proxy for rate limit behind nginx
+app.set('trust proxy', 1);
+
 // Security: Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
