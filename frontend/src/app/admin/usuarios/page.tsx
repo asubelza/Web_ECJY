@@ -29,12 +29,17 @@ export default function AdminUsuariosPage() {
   const [loadingUsers, setLoadingUsers] = useState(true)
   const [search, setSearch] = useState('')
   const [showModal, setShowModal] = useState(false)
+  const [showCreateModal, setShowCreateModal] = useState(false)
+  const [showPasswordModal, setShowPasswordModal] = useState(false)
   const [editingUser, setEditingUser] = useState<User | null>(null)
+  const [resetPasswordUser, setResetPasswordUser] = useState<User | null>(null)
+  const [newPassword, setNewPassword] = useState('')
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     role: 'user',
-    active: true
+    active: true,
+    password: ''
   })
 
   useEffect(() => {
@@ -71,9 +76,48 @@ export default function AdminUsuariosPage() {
       name: user.name,
       email: user.email,
       role: user.role,
-      active: user.active
+      active: user.active,
+      password: ''
     })
     setShowModal(true)
+  }
+
+  const handleCreateUser = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    try {
+      await axios.post('/users', {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role
+      })
+      toast.success('Usuario creado correctamente')
+      setShowCreateModal(false)
+      resetForm()
+      fetchUsers()
+    } catch (error: unknown) {
+      const message = (error as { response?: { data?: { message?: string } } })?.response?.data?.message || 'Error al crear usuario'
+      toast.error(message)
+    }
+  }
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    if (!resetPasswordUser) return
+
+    try {
+      await axios.put(`/users/${resetPasswordUser._id}/reset-password`, {
+        newPassword
+      })
+      toast.success('Password reseteada correctamente')
+      setShowPasswordModal(false)
+      setNewPassword('')
+      setResetPasswordUser(null)
+    } catch {
+      toast.error('Error al resetear password')
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -108,9 +152,16 @@ export default function AdminUsuariosPage() {
       name: '',
       email: '',
       role: 'user',
-      active: true
+      active: true,
+      password: ''
     })
     setEditingUser(null)
+  }
+
+  const openResetPassword = (user: User) => {
+    setResetPasswordUser(user)
+    setNewPassword('')
+    setShowPasswordModal(true)
   }
 
   const toggleUserStatus = async (user: User) => {
@@ -169,9 +220,21 @@ export default function AdminUsuariosPage() {
     <Container style={{ paddingTop: '120px', paddingBottom: '50px' }}>
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h1 style={{ color: '#1e3a5f' }}>Gestión de Usuarios</h1>
-        <a href="/admin" className="back-btn">
-          ← Volver al panel
-        </a>
+        <div className="d-flex gap-3">
+          <Button 
+            variant="primary" 
+            onClick={() => {
+              resetForm()
+              setShowCreateModal(true)
+            }}
+            style={{ background: '#1e3a5f', border: 'none' }}
+          >
+            + Nuevo Usuario
+          </Button>
+          <a href="/admin" className="back-btn">
+            ← Volver al panel
+          </a>
+        </div>
       </div>
 
       <div className="mb-4">
@@ -236,13 +299,20 @@ export default function AdminUsuariosPage() {
                   </Button>
                 </td>
                 <td>
-                  <div className="d-flex gap-2">
+                  <div className="d-flex gap-2 flex-wrap">
                     <Button
                       size="sm"
                       variant="outline-primary"
                       onClick={() => handleEdit(user)}
                     >
                       Editar
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline-secondary"
+                      onClick={() => openResetPassword(user)}
+                    >
+                      Resetear Pass
                     </Button>
                     <Button
                       size="sm"
@@ -317,6 +387,102 @@ export default function AdminUsuariosPage() {
               </Button>
               <Button type="submit" variant="primary">
                 Guardar
+              </Button>
+            </div>
+          </Form>
+        </Modal.Body>
+      </Modal>
+
+      <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Crear Nuevo Usuario</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleCreateUser}>
+            <Form.Group className="mb-3">
+              <Form.Label>Nombre completo</Form.Label>
+              <Form.Control
+                type="text"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                required
+                placeholder="Ingrese el nombre"
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                required
+                placeholder="correo@ejemplo.com"
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                required
+                minLength={6}
+                placeholder="Mínimo 6 caracteres"
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Rol</Form.Label>
+              <Form.Select
+                value={formData.role}
+                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+              >
+                <option value="user">Usuario</option>
+                <option value="admin">Administrador</option>
+              </Form.Select>
+            </Form.Group>
+
+            <div className="d-flex gap-2 justify-content-end">
+              <Button variant="secondary" onClick={() => setShowCreateModal(false)}>
+                Cancelar
+              </Button>
+              <Button type="submit" variant="primary" style={{ background: '#1e3a5f', border: 'none' }}>
+                Crear Usuario
+              </Button>
+            </div>
+          </Form>
+        </Modal.Body>
+      </Modal>
+
+      <Modal show={showPasswordModal} onHide={() => setShowPasswordModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Resetear Password</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p className="mb-3">
+            Ingrese la nueva password para el usuario: <strong>{resetPasswordUser?.name}</strong>
+          </p>
+          <Form onSubmit={handleResetPassword}>
+            <Form.Group className="mb-3">
+              <Form.Label>Nueva Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+                minLength={6}
+                placeholder="Mínimo 6 caracteres"
+              />
+            </Form.Group>
+
+            <div className="d-flex gap-2 justify-content-end">
+              <Button variant="secondary" onClick={() => setShowPasswordModal(false)}>
+                Cancelar
+              </Button>
+              <Button type="submit" variant="primary" style={{ background: '#1e3a5f', border: 'none' }}>
+                Actualizar Password
               </Button>
             </div>
           </Form>

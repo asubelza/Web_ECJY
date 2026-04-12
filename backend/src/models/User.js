@@ -41,6 +41,10 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String
   },
+  active: {
+    type: Boolean,
+    default: true
+  },
   createdAt: {
     type: Date,
     default: Date.now

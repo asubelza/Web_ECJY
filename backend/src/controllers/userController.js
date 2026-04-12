@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const Contact = require('../models/Contact');
 const Specialist = require('../models/Specialist');
+const bcrypt = require('bcryptjs');
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -120,6 +121,73 @@ exports.deleteUser = async (req, res) => {
     res.json({
       success: true,
       message: 'Usuario eliminado correctamente'
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+exports.createUser = async (req, res) => {
+  try {
+    const { name, email, password, role } = req.body;
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: 'El email ya está registrado'
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      role: role || 'user',
+      active: true
+    });
+
+    res.status(201).json({
+      success: true,
+      data: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        active: user.active
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  try {
+    const { newPassword } = req.body;
+
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'Usuario no encontrado'
+      });
+    }
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+
+    res.json({
+      success: true,
+      message: 'Password actualizada correctamente'
     });
   } catch (error) {
     res.status(500).json({
